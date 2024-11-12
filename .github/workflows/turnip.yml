@@ -205,7 +205,7 @@ jobs:
         cd $GITHUB_WORKSPACE/turnip_armhf_workdir
         git clone https://github.com/MastaG/mesa-turnip-ppa.git mesa-turnip
         cd mesa
-        for patch in $GITHUB_WORKSPACE/turnip_arm64_workdir/mesa-turnip/turnip-patches/*.patch; do
+        for patch in $GITHUB_WORKSPACE/turnip_armhf_workdir/mesa-turnip/turnip-patches/*.patch; do
           echo "Applying patch $patch"
           git apply "$patch"
         done
