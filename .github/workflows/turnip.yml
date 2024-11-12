@@ -125,9 +125,8 @@ jobs:
         Package: mesa-vulkan-drivers
         Source: mesa
         Version: ${{ env.branch_version }}-devel-$(date +%Y%m%d)
-        Architecture: arm64
-        Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-        Original-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+        Architecture: arm64, aarch64
+        Maintainer: @sabamdarif
         Installed-Size: 26658
         Depends: libvulkan1, python3:any | python3-minimal:any, libc6 (>= 2.34), libdrm-amdgpu1 (>= 2.4.110), libdrm2 (>= 2.4.99), libelf1 (>= 0.142), libexpat1 (>= 2.0.1), libgcc-s1 (>= 3.0), libllvm15, libstdc++6 (>= 11), libwayland-client0 (>= 1.20.0), libx11-xcb1 (>= 2:1.8.4), libxcb-dri3-0 (>= 1.13), libxcb-present0, libxcb-randr0 (>= 1.13), libxcb-shm0, libxcb-sync1, libxcb-xfixes0, libxcb1 (>= 1.9.2), libxshmfence1, libzstd1 (>= 1.5.2), zlib1g (>= 1:1.1.4)
         Provides: vulkan-icd
@@ -143,13 +142,17 @@ jobs:
         # Build the package
         dpkg-deb --build turnip_${{ env.branch_version }}_arm64
 
+    - name: Set Release Date
+      id: set_date
+      run: echo "RELEASE_DATE=$(date +'%m-%Y')" >> $GITHUB_ENV
+
     - name: Upload ARM64 Artifact to Release
       uses: softprops/action-gh-release@v2
       with:
         files: ${{ github.workspace }}/turnip_arm64_workdir/turnip_${{ env.branch_version }}_arm64.deb
         token: ${{ secrets.GITHUB_TOKEN }}
-        name: ubuntu turnip android ${{ env.branch_version }}-devel
-        tag_name: mesa_turnip_${{ env.branch_version }}
+        name: turnip ubuntu android ${{ env.branch_version }}-devel-${{ env.RELEASE_DATE }}
+        tag_name: turnip_${{ env.branch_version }}-${{ env.RELEASE_DATE }}
         draft: false
         prerelease: false
 
@@ -199,7 +202,7 @@ jobs:
 
     - name: Clone and Apply Patches
       run: |
-        cd $GITHUB_WORKSPACE/turnip_arm64_workdir
+        cd $GITHUB_WORKSPACE/turnip_armhf_workdir
         git clone https://github.com/MastaG/mesa-turnip-ppa.git mesa-turnip
         cd mesa
         for patch in $GITHUB_WORKSPACE/turnip_arm64_workdir/mesa-turnip/turnip-patches/*.patch; do
@@ -268,9 +271,8 @@ jobs:
         Package: mesa-vulkan-drivers
         Source: mesa
         Version: ${{ env.branch_version }}-devel-$(date +%Y%m%d)
-        Architecture: armhf
-        Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-        Original-Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+        Architecture: armhf, arm
+        Maintainer: @sabamdarif
         Installed-Size: 26658
         Depends: libvulkan1, python3:any | python3-minimal:any, libc6 (>= 2.34), libdrm-amdgpu1 (>= 2.4.110), libdrm2 (>= 2.4.99), libelf1 (>= 0.142), libexpat1 (>= 2.0.1), libgcc-s1 (>= 3.0), libllvm15, libstdc++6 (>= 11), libwayland-client0 (>= 1.20.0), libx11-xcb1 (>= 2:1.8.4), libxcb-dri3-0 (>= 1.13), libxcb-present0, libxcb-randr0 (>= 1.13), libxcb-shm0, libxcb-sync1, libxcb-xfixes0, libxcb1 (>= 1.9.2), libxshmfence1, libzstd1 (>= 1.5.2), zlib1g (>= 1:1.1.4)
         Provides: vulkan-icd
@@ -286,12 +288,16 @@ jobs:
         # Build the package
         dpkg-deb --build turnip_${{ env.branch_version }}_armhf
 
+    - name: Set Release Date
+      id: set_date
+      run: echo "RELEASE_DATE=$(date +'%m-%Y')" >> $GITHUB_ENV
+
     - name: Upload ARMHF Artifact to Release
       uses: softprops/action-gh-release@v2
       with:
         files: ${{ github.workspace }}/turnip_armhf_workdir/turnip_${{ env.branch_version }}_armhf.deb
         token: ${{ secrets.GITHUB_TOKEN }}
-        name: ubuntu turnip android ${{ env.branch_version }}-devel
-        tag_name: mesa_turnip_${{ env.branch_version }}
+        name: turnip ubuntu android ${{ env.branch_version }}-devel-${{ env.RELEASE_DATE }}
+        tag_name: turnip_${{ env.branch_version }}-${{ env.RELEASE_DATE }}
         draft: false
         prerelease: false
