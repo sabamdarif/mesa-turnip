@@ -125,10 +125,10 @@ jobs:
         Package: mesa-vulkan-drivers
         Source: mesa
         Version: ${{ env.branch_version }}-devel-$(date +%Y%m%d)
-        Architecture: arm64, aarch64
+        Architecture: arm64
         Maintainer: @sabamdarif
         Installed-Size: 26658
-        Depends: libvulkan1, python3:any | python3-minimal:any, libc6 (>= 2.34), libdrm-amdgpu1 (>= 2.4.110), libdrm2 (>= 2.4.99), libelf1 (>= 0.142), libexpat1 (>= 2.0.1), libgcc-s1 (>= 3.0), libllvm15, libstdc++6 (>= 11), libwayland-client0 (>= 1.20.0), libx11-xcb1 (>= 2:1.8.4), libxcb-dri3-0 (>= 1.13), libxcb-present0, libxcb-randr0 (>= 1.13), libxcb-shm0, libxcb-sync1, libxcb-xfixes0, libxcb1 (>= 1.9.2), libxshmfence1, libzstd1 (>= 1.5.2), zlib1g (>= 1:1.1.4)
+        Depends: libvulkan1
         Provides: vulkan-icd
         Section: libs
         Priority: optional
@@ -271,10 +271,10 @@ jobs:
         Package: mesa-vulkan-drivers
         Source: mesa
         Version: ${{ env.branch_version }}-devel-$(date +%Y%m%d)
-        Architecture: armhf, arm
+        Architecture: armhf
         Maintainer: @sabamdarif
         Installed-Size: 26658
-        Depends: libvulkan1, python3:any | python3-minimal:any, libc6 (>= 2.34), libdrm-amdgpu1 (>= 2.4.110), libdrm2 (>= 2.4.99), libelf1 (>= 0.142), libexpat1 (>= 2.0.1), libgcc-s1 (>= 3.0), libllvm15, libstdc++6 (>= 11), libwayland-client0 (>= 1.20.0), libx11-xcb1 (>= 2:1.8.4), libxcb-dri3-0 (>= 1.13), libxcb-present0, libxcb-randr0 (>= 1.13), libxcb-shm0, libxcb-sync1, libxcb-xfixes0, libxcb1 (>= 1.9.2), libxshmfence1, libzstd1 (>= 1.5.2), zlib1g (>= 1:1.1.4)
+        Depends: libvulkan1
         Provides: vulkan-icd
         Section: libs
         Priority: optional
