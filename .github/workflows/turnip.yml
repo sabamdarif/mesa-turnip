@@ -65,6 +65,11 @@ jobs:
         done
         echo "All patches applied successfully."
 
+    - name: Modify debian/rules for KGSL
+      run: |
+        cd $GITHUB_WORKSPACE/turnip_arm64_workdir/mesa  # Navigate to the correct directory
+        sed -i 's/GALLIUM_DRIVERS += freedreno$/GALLIUM_DRIVERS += freedreno\n\tconfflags_GALLIUM += -Dfreedreno-kmds=msm,kgsl/g' debian/rules
+
     - name: Build Mesa for Android ARM64
       run: |
         cd turnip_arm64_workdir/mesa
@@ -211,6 +216,11 @@ jobs:
         done
         echo "All patches applied successfully."
 
+    - name: Modify debian/rules for KGSL
+      run: |
+        cd $GITHUB_WORKSPACE/turnip_armhf_workdir/mesa  # Navigate to the correct directory
+        sed -i 's/GALLIUM_DRIVERS += freedreno$/GALLIUM_DRIVERS += freedreno\n\tconfflags_GALLIUM += -Dfreedreno-kmds=msm,kgsl/g' debian/rules
+
     - name: Build Mesa for ARM (armhf)
       run: |
         cd turnip_armhf_workdir/mesa
@@ -240,7 +250,7 @@ jobs:
           -Dvulkan-beta=true -Dfreedreno-kmds=kgsl -Db_lto=true
         ninja -C build-android-armhf
 
-    - name: Patch ELF and Package
+    - name: Patchelf to Match Soname and Package Armhf
       run: |
         cd turnip_armhf_workdir/mesa/build-android-armhf/src/freedreno/vulkan
         cp libvulkan_freedreno.so "$GITHUB_WORKSPACE/turnip_armhf_workdir"
